@@ -3,7 +3,7 @@ class Mailer < ActionMailer::Base
 
   def digest(subject, messages)
     @messages = messages
-    mail :to => messages.collect(&:recipients).uniq.collect(&:email), :subject => subject
+    mail :to => messages.collect(&:recipient).uniq.collect(&:email), :subject => subject
   end
 
   def single(message)
