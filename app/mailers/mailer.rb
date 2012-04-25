@@ -1,25 +1,13 @@
 class Mailer < ActionMailer::Base
-  default :from => "from@example.com"
+  default :from => "setme@example.com"
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.mailer.digest.subject
-  #
-  def digest
-    @greeting = "Hi"
-
-    mail :to => "to@example.org"
+  def digest(subject, messages)
+    @messages = messages
+    mail :to => messages.collect(&:recipients).uniq.collect(&:email), :subject => subject
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.mailer.single.subject
-  #
-  def single
-    @greeting = "Hi"
-
-    mail :to => "to@example.org"
+  def single(message)
+    @body = message.message
+    mail :to => message.recipient.email, :subject => message.subject
   end
 end

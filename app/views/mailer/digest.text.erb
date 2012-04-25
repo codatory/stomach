@@ -1,3 +1,8 @@
-Mailer#digest
+      ***    MESSAGE DIGEST ENCLOSED    ***
 
-<%= @greeting %>, find me in app/views/app/views/mailer/digest.text.erb
+<% @messages.each do |message| %>
+==================================================
+<%= message.subject.center(50) %>
+--------------------------------------------------
+<%= message.body %>
+
