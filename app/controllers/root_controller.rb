@@ -7,6 +7,9 @@ class RootController < ApplicationController
         :message => params[:message]
       })
 
+      # Deliver the message immediately in the background thread
+      QMAIL.deliver_message!(message.id) if params[:instant]
+
       render :json => message
     else
       render :json => {:error => 'Missing required fields'}
