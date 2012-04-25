@@ -9,7 +9,7 @@ class Sender
   end
 
   def deliver_digest(ids)
-    ids.to_a!
+    ids = ids.to_a
 
     case ids.count
     when 0
@@ -19,7 +19,9 @@ class Sender
     else
       subject = "Digest of #{ids.count} messages"
       messages = Message.find(ids)
+      messages.reject!(&:sent_at?)
       Mailer.digest(subject,messages).deliver
+      messages.each{|m| m.update_attribute(:sent_at, Time.now)}
     end
   end
 end
