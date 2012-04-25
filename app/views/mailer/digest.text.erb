@@ -1,8 +1,10 @@
       ***    MESSAGE DIGEST ENCLOSED    ***
 
-<% @messages.each do |message| %>
+<%- @messages.each do |message| %>
 ==================================================
 <%= message.subject.center(50) %>
 --------------------------------------------------
-<%= message.body %>
+<%= message.message %>
 
+
+<%- end %>
