@@ -4,8 +4,8 @@ class Sender
   def deliver_message(id)
     message = Message.find(id)
     raise 'Message already sent' if message.sent_at.present?
-    Mailer.deliver_single(message)
-    message.update_attributes(:sent_at => Time.now)
+    Mailer.single(message).deliver
+    message.update_attribute(:sent_at, Time.now)
   end
 
   def deliver_digest(ids)
@@ -19,7 +19,7 @@ class Sender
     else
       subject = "Digest of #{ids.count} messages"
       messages = Message.find(ids)
-      Mailer.deliver_digest(subject,messages)
+      Mailer.digest(subject,messages).deliver
     end
   end
 end
